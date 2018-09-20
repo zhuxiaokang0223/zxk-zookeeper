@@ -4,6 +4,7 @@ import java.util.List;
 
 /**
  * Describe: 远程服务操作接口
+ *          封装了操作zk的接口，用于程序内部调用
  *
  * @author : ZhuXiaokang
  * @mail : xiaokang.zhu@pactera.com

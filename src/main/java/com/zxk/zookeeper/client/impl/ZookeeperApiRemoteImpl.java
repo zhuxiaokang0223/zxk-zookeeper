@@ -14,14 +14,14 @@ import java.util.List;
  * Attention:
  * Modify:
  */
-public class ZookeeperApiRemote1Impl implements RemoteOperationService {
+public class ZookeeperApiRemoteImpl implements RemoteOperationService {
 
     /**
-     * zk 客户端操作
+     * zk 原生API 客户端操作
      */
     private ZookeeperApi zkClient = null;
 
-    public ZookeeperApiRemote1Impl() {
+    public ZookeeperApiRemoteImpl() {
         try {
             this.zkClient = new ZookeeperApi();
         } catch (Exception e) {

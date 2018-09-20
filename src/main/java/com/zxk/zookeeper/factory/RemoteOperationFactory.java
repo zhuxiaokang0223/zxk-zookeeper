@@ -3,7 +3,7 @@ package com.zxk.zookeeper.factory;
 import com.zxk.zookeeper.base.RemoteOperationService;
 
 /**
- * Describe:
+ * Describe: zookeeper客户端工厂
  *
  * @author : ZhuXiaokang
  * @mail : xiaokang.zhu@pactera.com
@@ -23,10 +23,10 @@ public class RemoteOperationFactory {
         RemoteOperationService remoteOperationService;
         switch (type) {
             case 1:
-                remoteOperationService = new com.zxk.zookeeper.client.impl.ZookeeperApiRemote1Impl();
+                remoteOperationService = new com.zxk.zookeeper.client.impl.ZookeeperApiRemoteImpl();
                 break;
             default:
-                remoteOperationService = new com.zxk.zookeeper.client.impl.ZookeeperApiRemote1Impl();
+                remoteOperationService = new com.zxk.zookeeper.client.impl.ZookeeperApiRemoteImpl();
                 break;
         }
         return remoteOperationService;
