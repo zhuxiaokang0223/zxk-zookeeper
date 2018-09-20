@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- 日志组件启动时，打印调试信息，并监控此文件变化，周期300秒 -->
+<Configuration status="warn" monitorInterval="300" strict="true" schema="Log4J-V2.2.xsd" packages="com.cmiot.dhap.log4j2.converter">
+    <properties>
+        <!-- 配置文件，包括此文件内的所有变量的配置 -->
+        <property name="LOG_PATH" value="./logs"/>
+        <property name="APP_NAME" value="testLog"/>
+        <!-- flume日志文件名 -->
+        <property name="TEST_FLUME_LOG_NAME" value="TestFlumeLog"/>
+        <!-- 日志收集端口 -->
+        <property name="FLUME_PORT" value="44444"/>
+    </properties>
+    <!-- contextName主要是为了区分在一个web容器下部署多个应用启用jmx时，不会出现混乱 -->
+    <contextName>${APP_NAME}</contextName>
+    <Appenders>
+        <!-- ***************************************************************** -->
+        <!-- 配置输出到控制台，仅在开发测试时启用输出到控制台  -->
+        <!-- ***************************************************************** -->
+        <Console name="STDOUT" target="SYSTEM_OUT">
+            <PatternLayout charset="UTF-8">
+                <Pattern>[%X{uniqueFlowNo}]%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger:%L- %m%n</Pattern>
+            </PatternLayout>
+        </Console>
+        <RollingFile name="debug" fileName="${LOG_PATH}/${APP_NAME}.log"  append="true"
+                     filePattern="${LOG_PATH}/${APP_NAME}.log.%d{yyyy-MM-dd}.%i">
+            <PatternLayout>
+                <Pattern>[%X{uniqueFlowNo}]%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger:- %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <!--如果日志文件比当前JVM的启动时间早，最小文件大小达到或超过minSize（字节）时封存文件-->
+                <OnStartupTriggeringPolicy minSize="10737418241"/>
+                <!--24小时封存文件，modulate用来校准当天时间-->
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <!--文件大小达到size时封存文件-->
+                <SizeBasedTriggeringPolicy size="1024MB"/>
+            </Policies>
+            <Filters>
+                <ThresholdFilter level="INFO"/>
+            </Filters>
+            <!--生成多少个日志文件后会覆盖以前的日志文件-->
+            <DefaultRolloverStrategy max="102400"/>
+        </RollingFile>
+        <RollingFile name="error" fileName="${LOG_PATH}/${APP_NAME}-error.log"  append="true"
+                     filePattern="${LOG_PATH}/${APP_NAME}-error.log.%d{yyyy-MM-dd}.%i">
+            <PatternLayout>
+                <Pattern>[%X{uniqueFlowNo}]%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger:- %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <OnStartupTriggeringPolicy minSize="1073741824"/>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="1024MB"/>
+            </Policies>
+            <Filters>
+                <ThresholdFilter level="ERROR"/>
+            </Filters>
+            <DefaultRolloverStrategy max="102400"/>
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+        <Root level="info">
+            <appender-ref ref="STDOUT" />
+        </Root>
+    </Loggers>
+
+</Configuration>
