@@ -1,6 +1,7 @@
 package com.zxk.zookeeper.client;
 
 import org.apache.zookeeper.*;
+import org.apache.zookeeper.data.ACL;
 import org.apache.zookeeper.data.Stat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,6 +60,18 @@ public class ZookeeperApi implements Watcher {
 
     /**
      * 创建节点
+     *
+     * @param path
+     * @param data
+     * @throws Exception
+     */
+    public void createNode(String path, String data) throws Exception {
+        // 创建开放权限的持久节点
+        createNode(path, data, ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
+    }
+
+    /**
+     * 创建节点
      * create(path<节点路径>, data[]<节点内容>, List(ACL访问控制列表), CreateMode<zNode创建类型>) </p><br/>
      * <pre>
      *     节点创建类型(CreateMode)
@@ -72,10 +85,10 @@ public class ZookeeperApi implements Watcher {
      * @param data
      * @throws Exception
      */
-    public void createNode(String path, String data) throws Exception {
+    public void createNode(String path, String data, List<ACL> acl, CreateMode createMode) throws Exception {
         try {
             // 创建开放权限的持久节点
-            zooKeeper.create(path, data.getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
+            zooKeeper.create(path, data.getBytes(), acl, createMode);
             logger.info("创建zk节点成功，路径为: {}, 内容为：{}", path, data);
         } catch (KeeperException e) {
             logger.error("zk createNode，exception: {}", e);
