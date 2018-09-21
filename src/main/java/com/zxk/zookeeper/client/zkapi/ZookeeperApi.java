@@ -1,4 +1,4 @@
-package com.zxk.zookeeper.client;
+package com.zxk.zookeeper.client.zkapi;
 
 import org.apache.zookeeper.*;
 import org.apache.zookeeper.data.ACL;
@@ -34,6 +34,11 @@ public class ZookeeperApi implements Watcher {
     private static final int SESSION_TIME_OUT = 2000;
 
     /**
+     * 连接ZK超时时长（ms）
+     */
+    private static final int CONNECTION_TIME_OUT = 3000;
+
+    /**
      * zookeeper 客户端
      */
     private static ZooKeeper zooKeeper = null;
@@ -48,7 +53,8 @@ public class ZookeeperApi implements Watcher {
     private void connectionZk() {
         try {
             zooKeeper = new ZooKeeper(SERVER_ID, SESSION_TIME_OUT, this);
-            Thread.sleep(3000);
+            // zk原生API创建连接时，没有连接超时时长，所以可以使用线程休眠来控制获取zk连接时长
+            Thread.sleep(CONNECTION_TIME_OUT);
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }

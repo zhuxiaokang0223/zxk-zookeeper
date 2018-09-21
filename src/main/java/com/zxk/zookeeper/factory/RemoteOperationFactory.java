@@ -1,6 +1,7 @@
 package com.zxk.zookeeper.factory;
 
-import com.zxk.zookeeper.base.RemoteOperationService;
+import com.zxk.zookeeper.remote.RemoteOperationService;
+import com.zxk.zookeeper.remote.impl.ZookeeperApiRemoteImpl;
 
 /**
  * Describe: zookeeper客户端工厂
@@ -23,10 +24,10 @@ public class RemoteOperationFactory {
         RemoteOperationService remoteOperationService;
         switch (type) {
             case 1:
-                remoteOperationService = new com.zxk.zookeeper.client.impl.ZookeeperApiRemoteImpl();
+                remoteOperationService = new ZookeeperApiRemoteImpl();
                 break;
             default:
-                remoteOperationService = new com.zxk.zookeeper.client.impl.ZookeeperApiRemoteImpl();
+                remoteOperationService = new ZookeeperApiRemoteImpl();
                 break;
         }
         return remoteOperationService;

@@ -1,4 +1,4 @@
-package com.zxk.zookeeper.base;
+package com.zxk.zookeeper.remote;
 
 import java.util.List;
 

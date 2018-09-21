@@ -1,7 +1,7 @@
-package com.zxk.zookeeper.client.impl;
+package com.zxk.zookeeper.remote.impl;
 
-import com.zxk.zookeeper.base.RemoteOperationService;
-import com.zxk.zookeeper.client.ZookeeperApi;
+import com.zxk.zookeeper.remote.RemoteOperationService;
+import com.zxk.zookeeper.client.zkapi.ZookeeperApi;
 
 import java.util.List;
 
