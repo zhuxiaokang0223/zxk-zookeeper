@@ -62,6 +62,9 @@ public class CuratorApi {
 
     public CuratorApi() {
         connectionZk();
+        zkListener(null);
+        start();
+        logger.info("创建zk连接成功");
     }
 
     /**
@@ -75,8 +78,7 @@ public class CuratorApi {
                     .sessionTimeoutMs(SESSION_TIME_OUT)
                     .retryPolicy(retryPolicy)
                     .namespace(NAMESPACE).build();
-            zookeeper.start();
-            logger.info("创建zk连接成功");
+
         } catch (Exception e) {
             throw new RuntimeException("创建zk连接失败, exception: {}", e);
         }
@@ -88,7 +90,7 @@ public class CuratorApi {
      * @param path
      */
     public void zkListener(String path) {
-
+        zookeeper.getCuratorListenable().addListener((client1,event) -> {logger.info("CuratorEvent: " + event.getType().name());});
     }
 
 
@@ -199,6 +201,13 @@ public class CuratorApi {
         {
            logger.info(result.getForPath() + " - " + result.getType());
         }
+    }
+
+    /**
+     * 开启连接
+     */
+    public void start() {
+        zookeeper.start();
     }
 
     /**
