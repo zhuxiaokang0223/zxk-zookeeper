@@ -34,6 +34,14 @@
             <version>0.10</version>
         </dependency>
 
+        <!-- 使用Curator作为客户端，自依赖了zookeeper包。 可以不依赖其他包 -->
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-framework</artifactId>
+            <version>4.0.1</version>
+        </dependency>
+
+
 
         <!-- 日志 -->
         <dependency>

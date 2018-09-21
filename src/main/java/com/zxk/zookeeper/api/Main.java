@@ -70,13 +70,38 @@ public class Main {
         remoteOperationService.deleteNode(path);
     }
 
+    /**
+     * Curator 操作
+     *
+     * @throws Exception
+     */
+    private static void curatorClient() throws Exception {
+        remoteOperationService = RemoteOperationFactory.createRemoteOperation(3);
+        String path = "/myCuratorClient";
+        String path1 = "/myCuratorClient/test1";
+        String path2 = "/myCuratorClient/test2";
+        String path3 = "/myCuratorClient/test2/tt";
+
+        remoteOperationService.createNode(path1, "");
+        remoteOperationService.createNode(path2, "");
+        remoteOperationService.createNode(path3, "");
+        remoteOperationService.getAllChild(path);
+        remoteOperationService.updateNodeDate(path, "我敲你啊");
+        remoteOperationService.readData(path);
+
+        remoteOperationService.deleteNode(path);
+    }
+
     public static void main(String[] args) throws Exception {
         System.err.println("开始操作............");
         //zk 原生 api操作
         //zkApi();
 
         //zkClient api操作
-        zkClient();
+        //zkClient();
+
+        // Curator api操作
+        curatorClient();
 
         System.err.println("操作完成............");
     }
