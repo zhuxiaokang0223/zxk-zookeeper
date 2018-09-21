@@ -1,2 +1,2 @@
 # zxk-zookeeper
-zookeeper java api
+zookeeper客户端使用 java api、ZkClient、Curator示例
