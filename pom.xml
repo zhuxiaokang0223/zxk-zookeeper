@@ -10,7 +10,7 @@
 
 
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/org.apache.zookeeper/zookeeper -->
+        <!--  使用zookeeper原生API作为客户端，只需要导入此依赖即可 -->
         <dependency>
             <groupId>org.apache.zookeeper</groupId>
             <artifactId>zookeeper</artifactId>
@@ -27,7 +27,15 @@
             </exclusions>
         </dependency>
 
-        <!--日志-->
+        <!-- 使用ZkClient作为客户端，需要org.apache.zookeeper和 com.101tec或com.github.sgroschupf  -->
+        <dependency>
+            <groupId>com.101tec</groupId>
+            <artifactId>zkclient</artifactId>
+            <version>0.10</version>
+        </dependency>
+
+
+        <!-- 日志 -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>

@@ -1,29 +1,29 @@
 package com.zxk.zookeeper.remote.impl;
 
+import com.zxk.zookeeper.client.zkclient.ZkClientApi;
 import com.zxk.zookeeper.remote.RemoteOperationService;
-import com.zxk.zookeeper.client.zkapi.ZookeeperApi;
 
 import java.util.List;
 
 /**
- * Describe: zk api 远程操作zookeeper
+ * Describe: zkClient 远程操作zookeeper
  *
  * @author : ZhuXiaokang
  * @mail : xiaokang.zhu@pactera.com
- * @date : 2018/9/20 10:37
+ * @date : 2018/9/21 11:21
  * Attention:
  * Modify:
  */
-public class ZookeeperApiRemoteImpl implements RemoteOperationService {
+public class ZkClientRemoteImpl implements RemoteOperationService {
 
     /**
      * zk 原生API 客户端操作
      */
-    private ZookeeperApi zkClient = null;
+    private ZkClientApi zkClient = null;
 
-    public ZookeeperApiRemoteImpl() {
+    public ZkClientRemoteImpl() {
         try {
-            this.zkClient = new ZookeeperApi();
+            this.zkClient = new ZkClientApi();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -39,7 +39,6 @@ public class ZookeeperApiRemoteImpl implements RemoteOperationService {
      */
     @Override
     public void createNode(String path, String data) throws Exception {
-        // 校验节点是否存在
         // 校验节点是否存在
         boolean exists = zkClient.exixtsNode(path);
         if (exists) {
@@ -57,11 +56,6 @@ public class ZookeeperApiRemoteImpl implements RemoteOperationService {
      */
     @Override
     public void deleteNode(String path) throws Exception {
-        // 校验节点是否存在
-        boolean exists = zkClient.exixtsNode(path);
-        if (!exists) {
-            throw new Exception("节点{" + path + "}不存在");
-        }
         // 删除节点
         zkClient.deleteNode(path);
     }
@@ -113,5 +107,4 @@ public class ZookeeperApiRemoteImpl implements RemoteOperationService {
     public List<String> getAllChild(String path) throws Exception {
         return zkClient.getAllChilds(path);
     }
-
 }
